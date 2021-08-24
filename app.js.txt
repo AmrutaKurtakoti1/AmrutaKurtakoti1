@@ -1,0 +1,85 @@
+var app = angular.module("MultiplicationApp", []);
+
+ 
+
+app.controller("MultiplyContoller",['$scope', function($scope){
+
+    const Express = require("express");
+
+    const BodyParser = require("body-parser");
+
+    const MongoClient = require("mongodb").MongoClient;
+
+    const ObjectId = require("mongodb").ObjectID;
+
+    const CONNECTION_URL;
+
+    const DATABASE_NAME = "accounting_department"; 
+
+    var app = Express();
+
+    app.use(BodyParser.json());
+
+    app.use(BodyParser.urlencoded({ extended: true }));
+
+    var database, collection;
+
+   
+
+    app.listen(5000, () => {
+
+        MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+
+            if(error) {
+
+                throw error;
+
+            }
+
+            database = client.db(DATABASE_NAME);
+
+            collection = database.collection("personnel");
+
+            console.log("Connected to `" + DATABASE_NAME + "`!");
+
+        });
+
+    });
+
+   
+
+    $scope.save = app.post('/saveData', function(err, db){
+
+        if (err) throw err;
+
+        var dbo = db.db("mydb");
+
+        var myobj = { Number1: num1, Number2: num2, Result: result};
+
+        dbo.collection("Numbers").insertOne(myobj, function(err, res) {
+
+        if (err) throw err;
+
+        console.log("1 entry inserted");
+
+        db.close();
+
+  });
+
+    });
+
+   
+
+    $scope.init = app.get('/getData',function(err, db){
+
+        var data = db.collection.find().limit(1).sort({$natural:-1});
+
+           $scope.num1 = data.Number1;
+
+           $scope.num2 = data.Number2;
+
+    });  
+
+}])
+
+ 

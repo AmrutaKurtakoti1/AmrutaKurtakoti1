@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <center><h1>Multiplication App</h1></center>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+        <div ng-app="MultiplicationApp">
+            <form name="myForm" ng-controller="MultiplyContoller" ng-init="init()">
+                    <center><div>
+                    First Number :
+                    <input type="number" value={{num1}} placeholder="Enter a Number" min='0' ng-model="num1" ng-init="num1=0"/>
+                </div></br>
+                <div>
+                    Second Number :
+                    <input type="number" value={{num2}} placeholder="Enter a Number"  min='0' ng-model="num2" ng-init="num2=0"/>
+                </div></br>
+                <div ng-model="result">Result: {{num1 * num2}}</div></br>
+                <div role="alert">
+                    <span style="color: red; font-weight: bold" ng-show="myForm.$error.min">
+                    Not valid number!</span>
+                </div>
+                <button ng-click="save();" ng-disabled="myForm.$error.min">Save</button></center>
+            </form>
+        </div>
+    </body>
+</html>
